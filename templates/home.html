@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+
+{% block header %}
+<header><a href="/" style="color: black; margin: 0 auto; display:block; text-align: center">Clueless!</a></header>
+{% endblock %}
+
+{% block banner_style %}style="height: 600px;"{% endblock %}
+
+{% block bar %}
+
+<nav class="top-bar" data-topbar>
+  <section class="top-bar-section">
+    <ul class="center">
+  </section>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+ <div id="app">
+    <h1> Demonstrate two-way communication</h1>
+    <p> Client pull: It was { solution.character } in the { solution.room } with the { solution.weapon }</p>
+    <p>Server push: It was {{ character }} in the {{ room }} with the {{ weapon }}</p>
+  </div>
+{% endblock %}
+
+<style>
+.banner-row !important {
+  height: 600px;
+}
+</style>

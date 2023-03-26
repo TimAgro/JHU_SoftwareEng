@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}">
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+    <title>Clueless!</title>
+
+<!-- CSS -->
+<body>
+
+  <div id="wrapper">
+
+    <div id ="content">
+      <!-- HEADER --> 
+      {% block header %}
+      {% endblock %}
+      
+      <div class="row full-width banner-row" {% block banner_style %}{% endblock %}>
+      </div>
+      
+      {% block bar %}{% endblock %}
+
+      <!-- BODY -->
+
+      <div class="row bottom-row">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div id="footer">
+        
+      </div>
+    </footer> 
+
+  </div>
+  <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script> 
+</body>
+
+
+</div>
+</html>
