@@ -8,6 +8,7 @@
     <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}">
     
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
   </head>
     <title>Clueless!</title>
 
@@ -21,10 +22,6 @@
       {% block header %}
       {% endblock %}
       
-      <div class="row full-width banner-row" {% block banner_style %}{% endblock %}>
-      </div>
-      
-      {% block bar %}{% endblock %}
 
       <!-- BODY -->
 
