@@ -30,3 +30,5 @@ class RoomType(Enum):
     KITCHEN = 8
 
 NUM_HALLWAY = 14
+
+PROMPT_WIDTH = 50

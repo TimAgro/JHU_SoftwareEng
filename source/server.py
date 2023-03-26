@@ -11,9 +11,32 @@ from source.util import (
 )
 import random
 
+
 ###############################################################
 ################     Game Element Classes      ################
 ###############################################################
+
+class Weapon:
+    def __init__(self, weapon_type, room_type):
+        self._weapon_type = weapon_type
+        self._room_type = room_type
+    
+    def is_in_room(self, room_type):
+        return self._room_type == room_type
+
+    def get_room(self):
+        return self._room_type
+    
+    def set_room(self, room_type):
+        self._room_type = room_type
+    
+    def print(self):
+        print(
+            '{:<16} at {:<16}'.format(
+                self._weapon_type.name,
+                self._room_type.name
+            )
+        )
 
 class Room:
     def __init__(self, room_type):
@@ -26,6 +49,9 @@ class Room:
     
     def is_weapon_in(self, weapons):
         return weapons in self._weaponss
+    
+    def get_room_type(self):
+        return self._room_type
 
     def get_suspect(self):
         return self._suspects
@@ -51,10 +77,10 @@ class Room:
         self._weapons.add(weapon)
         return True
     
-    def remove_suspect(self, weapon):
+    def remove_weapon(self, weapon):
         if weapon not in self._weapons:
             return False
-        self._weapons.remove(suspect)
+        self._weapons.remove(weapon)
         return True
 
     def print(self):
@@ -77,7 +103,7 @@ class Hallway:
         self._room = rooms
         self.is_secret_path = is_secret_path
     
-    def is_empty():
+    def is_empty(self):
         return self._suspect is None
     
     def get_suspect(self):
@@ -122,27 +148,31 @@ class Suspect:
     
     def reset_hallway(self):
         self._hallway = -1
+    
+    def get_room(self):
+        assert self.is_in_room()
+        return self._room
+    
+    def get_hallway(self):
+        assert self.is_in_hallway()
+        return self._hallway
 
     def set_hallway(self, hallway):
-        if self.is_in_hallway() != -1:
-            return False
         self._hallway = hallway
         self.reset_room()
         return True
     
     def set_room(self, room):
-        if self.is_in_room():
-            return False
         self._room = room
         self.reset_hallway()
         return True
     
     def print(self):
         print(
-            '{:<16}{:<4}{}'.format(
+            '{:<16}{:<8}{}'.format(
                 self._suspect_type.value,
                 self._hallway if self.is_in_hallway() else 'None',
-                self._room.name  if self.is_in_room() else 'None'
+                self._room.name if self.is_in_room() else 'None'
             )
         )
 
@@ -157,6 +187,7 @@ class Player:
 class GameBoard:
     def __init__(self):
         self.room = [None] * len(RoomType)
+        self.weapon = [None] * len(WeaponType)
         self.hallway = [None] * NUM_HALLWAY
         self.suspect = [None] * len(SuspectType)
 
@@ -175,7 +206,11 @@ class GameBoard:
             len(WeaponType)
         )
         for w_type, r_idx in zip(WeaponType, room_seq):
+            # add weapon to room
             self.room[r_idx].add_weapon(w_type)
+            # set weapon's room
+            self.weapon[w_type.value] = \
+                Weapon(w_type, self.room[r_idx].get_room_type())
 
     def _init_hallway(self):
         for r_type_1 in RoomType:
@@ -194,22 +229,45 @@ class GameBoard:
     
     def _init_suspect(self):
         for s_type in SuspectType:
+            hallway_idx = suspect_init_hallway(s_type)
             self.suspect[suspect_encode(s_type)] = \
-                Suspect(s_type, suspect_init_hallway(s_type))
+                Suspect(s_type, hallway_idx)
+            self.hallway[hallway_idx].add_suspect(s_type)
 
     #########  utility functions  #########
     def _get_hallway(self, r_type_1, r_type_2):
         return self.hallway[hallway_encode(r_type_1, r_type_2)]
     
-    def _move_suspect(self, suspect, hallway=None, room=None):
-        pass
+    def _move_suspect(self, suspect_type, hallway_idx=-1, room_type=None):
+        # logistics XOR
+        assert bool(hallway_idx < 0) ^ bool(room_type is None)
+
+        # remove suspect from hallway (if exist)
+        if self.suspect[suspect_encode(suspect_type)].is_in_hallway():
+            curr_hallway = self.suspect[suspect_encode(suspect_type)].get_hallway()
+            self.hallway[curr_hallway].remove_suspect(suspect_type)
+        # remove suspect from room (if exist)
+        if self.suspect[suspect_encode(suspect_type)].is_in_room():
+            curr_room_type = self.suspect[suspect_encode(suspect_type)].get_room()
+            self.room[curr_room_type.value].remove_suspect(suspect_type)
+
+        # update suspect's hallway and add suspect to hallway (hallway case)
+        if hallway_idx >= 0:
+            assert self.hallway[hallway_idx].is_empty()
+            self.suspect[suspect_encode(suspect_type)].set_hallway(hallway_idx)
+            self.hallway[hallway_idx].add_suspect(suspect_type)
+        # update suspect's room and add suspect to room (room case)
+        if room_type is not None:
+            self.suspect[suspect_encode(suspect_type)].set_room(room_type)
+            self.room[room_type.value].add_suspect(suspect_type)
     
-    def _move_weapon(self, weapon, from_room, to_room):
-        if not self.room[from_room].is_weapon_in(weapon):
-            return False
-        self.room[from_room].remove_weapon(weapon)
-        self.room[to_room].to_weapon(weapon)
-        return True
+    def _move_weapon(self, weapon_type, room_type):
+        # update room's weapon
+        curr_room_type = self.weapon[weapon_type.value].get_room()
+        self.room[room_type.value].add_weapon(weapon_type)
+        self.room[curr_room_type.value].remove_weapon(weapon_type)
+        # update weapon's room
+        self.weapon[weapon_type.value].set_room(room_type)
 
     #########  print functions  #########
     def print_room(self):
@@ -218,6 +276,14 @@ class GameBoard:
         print('-'*50)
         for r in self.room:
             r.print()
+        print()
+    
+    def print_weapon(self):
+        print('-'*50)
+        print('Weapon')
+        print('-'*50)
+        for w in self.weapon:
+            w.print()
         print()
     
     def print_hallway(self):
@@ -230,7 +296,7 @@ class GameBoard:
     
     def print_suspect(self):
         print('-'*50)
-        print('Suspects (name, hallway_id, room)')
+        print('Suspects (name, hallway, room)')
         print('-'*50)
         for s in self.suspect:
             s.print()
@@ -239,13 +305,21 @@ class GameBoard:
     def print_all(self):
         print()
         self.print_room()
+        self.print_weapon()
         self.print_hallway()
         self.print_suspect()
 
 
 def main():
     gb = GameBoard()
-    gb.print_all()
+    gb.print_room()
+    # gb.print_hallway()
+    gb.print_suspect()
+    gb._move_suspect(SuspectType.PROF_PLUM, room_type = RoomType.HALL)
+    gb._move_suspect(SuspectType.MRS_WHITE, hallway_idx = 3)
+    gb.print_room()
+    # gb.print_hallway()
+    gb.print_suspect()
 
 if __name__ == '__main__':
     main()
