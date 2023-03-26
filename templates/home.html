@@ -24,7 +24,8 @@
         pixelArt: true,
         scene: {
             preload: preload,
-            create: create
+            create: create,
+            update: update
         }
     };
 
@@ -45,20 +46,26 @@
         this.load.image('ballroom', '{{ url_for('static', filename="assets/ballroom.png") }}');
         this.load.image('kitchen', '{{ url_for('static', filename="assets/kitchen.png") }}');
 
+        this.load.image('piece', '{{ url_for('static', filename="assets/piece.png") }}');
 
         this.load.tilemapCSV('map', '{{ url_for('static', filename="assets/tilemap.csv") }}');
 
     }
 
     var cursors;
-
+    var controls;
+    var tiles;
+    var layer;
+    var map;
+    var player;
+    var marker;
 
     function create ()
     {
     //Create the tilemap
-    var map = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
-    var tiles = map.addTilesetImage('tiles');
-    var layer = map.createStaticLayer(0, tiles, 0, 0);
+    map = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
+    tiles = map.addTilesetImage('tiles');
+    layer = map.createStaticLayer(0, tiles, 0, 0);
 
     //add the rooms
     var study = this.add.sprite(56, 32, 'study');
@@ -73,7 +80,48 @@
     var ballroom = this.add.sprite(192, 336, 'ballroom');
     var kitchen = this.add.sprite(336, 336, 'kitchen');
 
+    player = this.add.image(120, 8, 'piece');
+
+
+    selectedTile = map.getTileAt(2, 3);
+
+    marker = this.add.graphics();
+    marker.lineStyle(2, 0x000000, 1);
+    marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
+
+    var cursors = this.input.keyboard.createCursorKeys();
+    var controlConfig = {
+        camera: this.cameras.main,
+        left: cursors.left,
+        right: cursors.right,
+        up: cursors.up,
+        down: cursors.down,
+        speed: 0.5
+    };
+    controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
+
     }
+
+    function update (time, delta)
+    {
+        controls.update(delta);
+
+        var worldPoint = this.input.activePointer.positionToCamera(this.cameras.main);
+
+        // Rounds down to nearest tile
+        var pointerTileX = map.worldToTileX(worldPoint.x);
+        var pointerTileY = map.worldToTileY(worldPoint.y);
+
+        // Snap to tile coordinates, but in world space
+        marker.x = map.tileToWorldX(pointerTileX);
+        marker.y = map.tileToWorldY(pointerTileY);
+
+        if (this.input.manager.activePointer.isDown)
+        {
+          player.setPosition(pointerTileX*16 + 8, pointerTileY*16 + 8);  
+        }
+
+      }
   </script>
 
 {% endblock %}
