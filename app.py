@@ -87,7 +87,7 @@ def lobby():
 #This will be the page that you get sent to after logging in
 def game(game_id):
     if session.get('logged_in'):
-        return render_template('home.html')
+        return render_template('game.html')
     else:
         return render_template('index.html', message="Hello!")
 
