@@ -14,14 +14,49 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/select2/select2.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/daterangepicker/daterangepicker.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
-	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
-{% block content %}{% endblock %}
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+		<div class="container">
+		  <a class="navbar-brand">Clueless</a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		</div>
+
+		<ul id="nav-mobile" class="right side-nav">
+        
+			{% if not session.username %}
+			<li><a class="modal-trigger" href="#login-modal"><i class=fa-sm"></i> Login in</a></li>
+			{% else %}
+			<li><i class="fa fa-sm"></i> Logged in as <div id="username">{{session.username}}</div></a></li>
+			<li><a class="modal-trigger" href="#logout-modal">Logout</a></li>
+			{% endif %}
+	
+		</ul>
+	</nav>
+
+	
+    <div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+			  <div class="col-lg-8 col-md-7 col-sm-6">
+			  </div>
+			  <div class="col-lg-4 col-md-5 col-sm-6">
+			  </div>
+			</div>
+		  </div>
+		{% block content %}{% endblock %}
+    </div>
+
 	<footer><p style="text-align:center;">Template courtesy: colorlib</p></footer>
-    <script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
     <script src="{{ url_for('static', filename='vendor/animsition/js/animsition.min.js')}}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/popper.js')}}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -30,5 +65,7 @@
 	<script src="{{ url_for('static', filename='vendor/daterangepicker/daterangepicker.js')}}"></script>
 	<script src="{{ url_for('static', filename='vendor/countdowntime/countdowntime.js')}}"></script>
 	<script src="{{ url_for('static', filename='js/main.js')}}"></script>
+
+
 </body>
 </html>

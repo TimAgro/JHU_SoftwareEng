@@ -1,15 +1,19 @@
-#from flask import Flask, url_for, redirect, render_template, request, json, jsonify, session
-#from flask_sqlalchemy import SQLAlchemy
-#from sqlalchemy.sql import func
-#from flask_cors import CORS
+from random import random
+from time import sleep
+from threading import Thread, Event
+import os
 
-
-
-from flask import Flask, url_for, render_template, request, redirect, session
+from flask import Flask, url_for, render_template, request, redirect, session, json, jsonify, copy_current_request_context
 from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
 app = Flask(__name__)
 db = SQLAlchemy()
+socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
+
+#random number Generator Thread
+thread = Thread()
+thread_stop_event = Event()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +37,15 @@ class Game(db.Model):
     player_4 = db.Column(db.Integer)
     player_5 = db.Column(db.Integer)
     player_6 = db.Column(db.Integer)
+    comments = db.relationship('Comment', backref='game',
+                                lazy='dynamic')
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String, unique=False)
+    body = db.Column(db.String, unique=False) 
+    emitted = db.Column(db.String, unique=False)
+    game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
     
 
 @app.route('/', methods=['GET'])
@@ -66,6 +79,7 @@ def login():
         data = User.query.filter_by(username=u, password=p).first()
         if data is not None:
             session['logged_in'] = True
+            session['username'] = u
             return redirect(url_for('index'))
         return render_template('index.html', message="Incorrect Details")
 
@@ -75,6 +89,7 @@ def logout():
     session['logged_in'] = False
     return redirect(url_for('index'))
 
+
 @app.route('/lobby', methods=['GET'])
 #Once you are logged in, you are sent to lobby where you can join or create a game
 def lobby():
@@ -83,13 +98,56 @@ def lobby():
     else:
         return render_template('index.html', message="Hello!")
 
+
 @app.route('/game/<game_id>', methods=['GET'])
 #This will be the page that you get sent to after logging in
-def game(game_id):
+def game(game_id, methods = ['GET']):
+    users = db.session.query(User).all()
     if session.get('logged_in'):
-        return render_template('game.html')
+        #return render_template('game.html')
+        return render_template("game.html",users=users, game_id=game_id)
     else:
         return render_template('index.html', message="Hello!")
+
+
+def gameManager():
+    #infinite loop of magical random numbers
+    print("Making random numbers")
+    while not thread_stop_event.isSet():
+        number = round(random()*10, 3)
+        print(number)
+        socketio.emit('newnumber', {'number': number}, namespace='/test')
+        socketio.sleep(2)
+
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    # need visibility of the global thread object
+    global thread
+    print('Client connected')
+
+    #Start the game manager if it hasn't been started already
+    if not thread.is_alive():
+        print("Starting Thread")
+        thread = socketio.start_background_task(gameManager)
+
+
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+    print('Client disconnected')
+
+
+@socketio.on('join')
+def join(message):
+    join_room(message['room'])
+    emit('my response', {'data': 'new user entered'})
+
+@socketio.on('new_message')
+def handle_new_message(message):
+    print(f"new message: {message}")
+    print(session["username"])
+    emit("chat", {"username": session["username"], "message": message}, broadcast=True)
+
 
 app.secret_key = "ThisIsNotASecret:p"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -97,57 +155,4 @@ app.app_context().push()
 db.init_app(app)
 db.create_all()
 db.session.commit()
-
-
-
-'''
-app = Flask(__name__, template_folder='templates')
-db = SQLAlchemy()
-
-# enable CORS
-#CORS(app, resources={r'/*': {'origins': '*'}})
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(100))
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return '<User %r>' % self.username
-
-app.secret_key = "ThisIsNotASecret:p"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.app_context().push()
-db.init_app(app)
-db.create_all()
-db.session.commit()
-
-@app.route('/')
-def index():
-
-    room = db.session.query(Room.name).order_by(func.random()).first()
-    character = db.session.query(Character.name).order_by(func.random()).first()
-    weapon = db.session.query(Weapon.name).order_by(func.random()).first()
-
-    #print("Query: ", room.name)
-    #test = "It was " + str(character.name) + " in the " + str(room.name) + " with the " + str(weapon.name) + "!"
-    
-    #if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-    #    solution = {'room': room.name, 'character': character.name, 'weapon': weapon.name }
-    #    return jsonify(solution)
-
-    #return render_template("home.html",room=room.name, character=character.name, weapon=weapon.name)
-    return "test"
-
-# sanity check route
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong!')
-
-'''
+socketio.run(app)
