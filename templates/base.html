@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Flask Login</title>
+	<title>Clueless</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icons/favicon.ico') }}"/>
@@ -16,6 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/customizations.css')}}">
 
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
@@ -23,7 +24,7 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg fixed-top">
 		<div class="container">
 		  <a class="navbar-brand">Clueless</a>
 		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +57,7 @@
 		{% block content %}{% endblock %}
     </div>
 
-	<footer><p style="text-align:center;">Template courtesy: colorlib</p></footer>
+	<footer><p style="text-align:center;">Andrew Moore, Tim Chen, Sean Ferrell - Johns Hopkins University</p></footer>
     <script src="{{ url_for('static', filename='vendor/animsition/js/animsition.min.js')}}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/popper.js')}}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>

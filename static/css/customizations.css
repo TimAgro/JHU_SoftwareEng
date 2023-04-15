@@ -1,0 +1,91 @@
+/*/////////////////////////////////////////////////////////////
+Customization*/
+
+.wrap-login100 {
+    background-color: #3F4E4F;
+  }
+  
+  .wrap-login100 {
+    background-color: #3F4E4F;
+  }
+  
+  .navbar {
+    background-color: #2C3639;
+  }
+  
+  .bg-primary {
+    background-color: #A27B5C;
+  }
+
+  .login100-form-title {
+    color:#DCD7C9;
+  }
+
+  .login100-form-btn {
+    background-color: #A27B5C;
+    color: #DCD7C9;
+  }
+
+  body {
+    background: linear-gradient(to bottom, rgba(39, 32, 28, 0.2) 0%, rgba(156, 111, 78, 0.2) 0%), url(../assets/background.jpg);
+    background-position: center;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+
+  .wrap-login100 {
+    background-color: #3F4E4F;
+  }
+
+  input {
+    background-color: #DCD7C9;
+    color: #2C3639;
+  }
+  .btn-secondary {
+        background-color: #A27B5C;
+        color: #DCD7C9;
+  }
+  .input-group-text {
+    background-color: #A27B5C;
+  }
+  
+  .navbar-brand {
+    color: #DCD7C9;
+    font-size: x-large;
+  }
+
+  #nav-mobile {
+    width: 200px;
+    color: #DCD7C9;
+  }
+
+  .btn {
+    background-color:#A27B5C;
+  }
+
+  /*GAME PAGE */
+
+  .d-inline-block {
+    background-color: #3F4E4F;
+  }
+
+  .col-md-4, .col-md-8{
+    background-color: #2C3639;
+  }
+
+  
+  .btn-danger {
+    background-color: darkred;
+  }
+
+
+
+  .list-group-item, .list-group-item.active {
+    background-color:#2C3639;
+  }
+
+  #game_status {
+    text-align: center;
+  }
+
+  

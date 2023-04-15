@@ -132,15 +132,18 @@ def test_connect():
         thread = socketio.start_background_task(gameManager)
 
 
-@socketio.on('disconnect', namespace='/test')
-def test_disconnect():
-    print('Client disconnected')
-
-
 @socketio.on('join')
 def join(message):
     join_room(message['room'])
-    emit('my response', {'data': 'new user entered'})
+    #Add the name to the game
+    emit("join", {"username": session["username"], "room": message['room']}, broadcast=True)
+
+@socketio.on("leave", namespace='/')
+def left(message):
+    #room = session["current_room"]
+    print("leave")
+    leave_room(message['room'])
+    emit("leave", {"username": session["username"], "room": message['room']}, broadcast=True)
 
 @socketio.on('new_message')
 def handle_new_message(message):

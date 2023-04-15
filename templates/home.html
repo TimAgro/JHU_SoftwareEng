@@ -6,13 +6,22 @@
 			<span class="login100-form-title p-b-51">
 				Welcome!!<br>
 			</span>
-			<div class="container-login100-form-btn m-t-17">
-				<button class="login100-form-btn">
-					<a class="login100-form-btn" href="/logout">Logout</a>
-				</button>
-			</div>
+
+			<button type="button" class="btn btn-secondary btn-lg btn-block"><a class="login100-form-btn" href="/logout">Logout</a></button>
+			<button type="button" class="btn btn-secondary btn-lg btn-block">Join Existing Game</button>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+				  <span class="input-group-text" id="inputGroup-sizing-default">Game ID</span>
+				</div>
+				<input name="game_id_input" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+			  </div>
+			<br>
+			<button type="button" class="btn btn-secondary btn-lg btn-block">Create a New Game</button>
 
 		</div>
+
 	</div>
+
+
 </div>
 {% endblock %}
