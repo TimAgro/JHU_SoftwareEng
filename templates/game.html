@@ -90,7 +90,8 @@
 <script>
   $(document).ready(function(){
     //connect to the socket server.
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    //var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var socket = io.connect(https://clue-test-server-app.herokuapp.com/socket.io");
     var numbers_received = [];
     socket.emit('join', {room: "{{game_id}}"});
 
