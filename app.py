@@ -175,4 +175,7 @@ app.app_context().push()
 db.init_app(app)
 db.create_all()
 db.session.commit()
-socketio.run(app, debug=True, port=5000)
+
+
+if __name__ == "__main__":
+    socketio.run(app, debug=True, port=5000)
