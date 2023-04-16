@@ -15,6 +15,8 @@ socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 thread = Thread()
 thread_stop_event = Event()
 
+user_list = []
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True)
@@ -102,10 +104,10 @@ def lobby():
 @app.route('/game/<game_id>', methods=['GET'])
 #This will be the page that you get sent to after logging in
 def game(game_id, methods = ['GET']):
-    users = db.session.query(User).all()
+    #users = db.session.query(User).all()
     if session.get('logged_in'):
         #return render_template('game.html')
-        return render_template("game.html",users=users, game_id=game_id)
+        return render_template("game.html",users=user_list, game_id=game_id)
     else:
         return render_template('index.html', message="Hello!")
 
@@ -131,11 +133,18 @@ def test_connect():
         print("Starting Thread")
         thread = socketio.start_background_task(gameManager)
 
-
 @socketio.on('join')
 def join(message):
     join_room(message['room'])
-    #Add the name to the game
+    blnAlreadyInRoom = False
+    for i in range(len(user_list)):
+        if (user_list[i]['room'] == message['room'] and user_list[i]['username'] == session["username"]):
+            blnAlreadyInRoom = True
+            break
+    if blnAlreadyInRoom == False:
+        #Add the name to the game
+        user_list.append({"username": session["username"], "room": message['room']})
+    print(user_list)
     emit("join", {"username": session["username"], "room": message['room']}, broadcast=True)
 
 @socketio.on("leave", namespace='/')
@@ -143,6 +152,11 @@ def left(message):
     #room = session["current_room"]
     print("leave")
     leave_room(message['room'])
+    for i in range(len(user_list)):
+        if (user_list[i]['room'] == message['room'] and user_list[i]['username'] == session["username"]):
+            del user_list[i]
+            break
+    print(user_list)
     emit("leave", {"username": session["username"], "room": message['room']}, broadcast=True)
 
 @socketio.on('new_message')
@@ -151,6 +165,9 @@ def handle_new_message(message):
     print(session["username"])
     emit("chat", {"username": session["username"], "message": message}, broadcast=True)
 
+@socketio.on('button')
+def button_inputs(message):
+    emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
 
 app.secret_key = "ThisIsNotASecret:p"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
