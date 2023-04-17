@@ -20,16 +20,16 @@ class Weapon:
     def __init__(self, weapon_type, room_type):
         self._weapon_type = weapon_type
         self._room_type = room_type
-    
+
     def is_in_room(self, room_type):
         return self._room_type == room_type
 
     def get_room(self):
         return self._room_type
-    
+
     def set_room(self, room_type):
         self._room_type = room_type
-    
+
     def print(self):
         print(
             '{:<16} at {:<16}'.format(
@@ -43,13 +43,13 @@ class Room:
         self._room_type = room_type
         self._suspects = set()
         self._weapons = set()
-    
+
     def is_suspect_in(self, suspect):
         return suspect in self._suspects
-    
+
     def is_weapon_in(self, weapons):
         return weapons in self._weaponss
-    
+
     def get_room_type(self):
         return self._room_type
 
@@ -61,7 +61,7 @@ class Room:
             return False
         self._suspects.add(suspect)
         return True
-    
+
     def remove_suspect(self, suspect):
         if suspect not in self._suspects:
             return False
@@ -76,7 +76,7 @@ class Room:
             return False
         self._weapons.add(weapon)
         return True
-    
+
     def remove_weapon(self, weapon):
         if weapon not in self._weapons:
             return False
@@ -102,24 +102,24 @@ class Hallway:
         self._suspect = None
         self._room = rooms
         self.is_secret_path = is_secret_path
-    
+
     def is_empty(self):
         return self._suspect is None
-    
+
     def get_suspect(self):
         return self._suspect
-    
+
     def add_suspect(self, suspect):
         if not self.is_empty():
             return False
         self._suspect = suspect
         return True
-    
+
     def remove_suspect(self, suspect):
         if self.is_empty():
             return False
         self._suspect = None
-    
+
     def print(self):
         print(
             '{:<16}{:<16}{:<8}{}'.format(
@@ -136,23 +136,23 @@ class Suspect:
         self._hallway = hallway
         self._room = None
         self._is_played = False
-    
+
     def is_in_room(self):
         return self._room is not None
 
     def is_in_hallway(self):
         return self._hallway != -1
-    
+
     def reset_room(self):
         self._room = None
-    
+
     def reset_hallway(self):
         self._hallway = -1
-    
+
     def get_room(self):
         assert self.is_in_room()
         return self._room
-    
+
     def get_hallway(self):
         assert self.is_in_hallway()
         return self._hallway
@@ -161,12 +161,12 @@ class Suspect:
         self._hallway = hallway
         self.reset_room()
         return True
-    
+
     def set_room(self, room):
         self._room = room
         self.reset_hallway()
         return True
-    
+
     def print(self):
         print(
             '{:<16}{:<8}{}'.format(
@@ -182,6 +182,36 @@ class Suspect:
 
 class Player:
     def __init__(self):
+        self.location = None
+        self.character = None
+        self.current_game = None
+        self.player_turn = None
+
+    def register(self):
+        pass
+
+    def login(self):
+        pass
+
+    def start(self):
+        pass
+
+    def quit(self):
+        pass
+
+    def accusation(self):
+        pass
+
+    def suggestion(self):
+        pass
+
+    def disprove(self):
+        pass
+
+    def move(self):
+        pass
+
+    def skip(self):
         pass
 
 class GameBoard:
@@ -268,6 +298,9 @@ class GameBoard:
         self.room[curr_room_type.value].remove_weapon(weapon_type)
         # update weapon's room
         self.weapon[weapon_type.value].set_room(room_type)
+    
+    def check_move(self):
+        pass
 
     #########  print functions  #########
     def print_room(self):
@@ -309,6 +342,34 @@ class GameBoard:
         self.print_hallway()
         self.print_suspect()
 
+class GameManager:
+    def __init__(self, n_players):
+        self.n_players = n_players
+        self.current_players = None
+        self.game_solution = None
+        self.player_name = None
+        self.player_password = None
+    
+    def register_player(self):
+        pass
+
+    def verify_login(self):
+        pass
+
+    def start_game(self):
+        pass
+
+    def quit_game(self):
+        pass
+
+    def check_accusation(self):
+        pass
+
+    def check_suggestion(self):
+        pass
+
+    def process_turn (self):
+        pass
 
 def main():
     gb = GameBoard()
