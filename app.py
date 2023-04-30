@@ -189,13 +189,13 @@ def restart(message):
     deck_dict = {item['card']:item for item in deck_list}
 
     #Do the same for players
-    players_list = []
-    for i, item in enumerate(gm.players):
-        if item != 0:
-            players_list.append({"player_ID":item, "order": i})
-    players_dict = {item['player_ID']:item for item in players_list}
+    #players_list = []
+    #for i, item in enumerate(gm.players):
+    #    if item != 0:
+    #        players_list.append({"player_ID":item, "order": i})
+    #players_dict = {item['player_ID']:item for item in players_list}
 
-    emit("restart", {"player_grid": player_dict, "deck": deck_dict, "players_list": players_dict}, broadcast=True)
+    emit("restart", {"player_grid": player_dict, "deck": deck_dict}, broadcast=True)
 
 
 @socketio.on('move')
