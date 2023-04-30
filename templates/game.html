@@ -341,8 +341,9 @@
       }
       */
 
-      var received = JSON.parse(data["player_grid"]);
-      console.log(received);
+      for (var key in data["player_grid"]){
+        console.log( key, data["player_grid"][key] );
+      }
         
       //if (data["message"] == "Restart") {
       //  player1.setPosition(player1.x - 55, player1.y); 
