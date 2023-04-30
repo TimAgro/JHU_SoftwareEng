@@ -339,9 +339,19 @@
       for (var key in data["deck"]){
         $('.what').each(function(){
           if($(this).text() == key){
-            console.log(key);
+            this.toggleClass('stroked');
           }
-       }); 
+        });
+        $('.who').each(function(){
+          if($(this).text() == key){
+            this.toggleClass('stroked');
+          }
+        }); 
+        $('.where').each(function(){
+          if($(this).text() == key){
+            this.toggleClass('stroked');
+          }
+        });  
       }
 
     })
