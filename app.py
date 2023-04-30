@@ -171,7 +171,6 @@ def restart(message):
     #    for game in games:
     #        if game.game_ID ==  message['room']:
     #            game.restart()
-    game.
     gm = game.GameManager([1,2,3,4,5,6],1)
     games.append(gm)
      
