@@ -180,11 +180,17 @@ def restart(message):
             if item != 0:
                 player_grid.append({"type":item, "x": i, "y": j})
     player_dict = {item['type']:item for item in player_grid}
-    print(player_dict)
+
+    deck_list = []
+    for i, item in enumerate(gm.deck):
+        if item != 0:
+            deck_list.append({"type":item})
+    deck_dict = {item['type']:item for item in deck_list}
+
     #players = jsonify({'players': player_grid})
     #Do something. Check game engine
     #emit("restart", {"player_grid": gm.gb.player_grid, "deck": gm.deck}, broadcast=True)
-    emit("restart", {"player_grid": player_dict, "deck": "deck"}, broadcast=True)
+    emit("restart", {"player_grid": player_dict, "deck": deck_dict}, broadcast=True)
 
 
 @socketio.on('move')

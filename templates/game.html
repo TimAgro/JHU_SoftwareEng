@@ -320,32 +320,7 @@
       player5.setPosition(-100,-100);
       player6.setPosition(-100,-100);
 
-      /*
-      for (let i = 0; i < data["player_grid"].length; i++) {
-        for (let j = 0; j < data["player_grid"][i].length; j++) {
-          console.log(data["player_grid"][i][j]);
-          if (key=="PROF_PLUM"){
-            player1.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
-          } else if (key=="MRS_PEACOCK"){
-            player2.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
-          } else if (key=="MR_GREEN"){
-            player3.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
-          } else if (key=="MRS_WHITE"){
-            player4.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
-          } else if (key=="COL_MUSTARD"){
-            player5.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
-          } else if (key=="MISS_SCARLET"){
-            player6.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
-          }
-        }
-      }
-      */
-
       for (var key in data["player_grid"]){
-        console.log( key, data["player_grid"][key] );
-        console.log( key, data["player_grid"][key]["type"] );
-        console.log( key, data["player_grid"][key]["x"] );
-        console.log( key, data["player_grid"][key]["y"] );
         if (key=="PROF_PLUM"){
             player1.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
           } else if (key=="MRS_PEACOCK"){
@@ -360,10 +335,10 @@
             player6.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
           }
       }
-        
-      //if (data["message"] == "Restart") {
-      //  player1.setPosition(player1.x - 55, player1.y); 
-      //}
+      console.log(data["deck"]);
+      for (var key in data["deck"]){
+        console.log(key)
+      }
     })
 </script>
 
