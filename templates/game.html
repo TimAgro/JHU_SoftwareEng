@@ -101,7 +101,7 @@
             <h3 id="game_status">Game Started</h3>
             <button class="btn btn-secondary" type="button" id="suggestion-button">Suggestion</button>
             <button class="btn btn-secondary" type="button" id="accusation-button">Accusation</button>
-            <button class="btn btn-secondary" type="button" id="skip-button">Skip Turn</button>
+            <button class="btn btn-danger" type="button" id="start-button">Restart Game</button>
             <button name="exit" class="btn btn-danger" id="exit">Exit Game</button> 
   
           </div>
@@ -305,8 +305,23 @@
           player1.setPosition(player1.x - 55, player1.y); 
         }    
          
-        
     });
+
+    $('#start-button').click(function() {
+      socket.emit('new_message', "Restart");
+    });
+
+    socket.on("chat", function(data){
+      console.log("comment emitted ");
+      if (data["message"] == "Restart") {
+        player1 = this.add.sprite(2*55 + 27, 43 + 22, 'pieces', 0);
+        player2 = this.add.sprite(3*55 + 27, 43 + 22, 'pieces', 1);
+        player3 = this.add.sprite(2*55 + 27, 2*43 + 22, 'pieces', 2);
+        player4 = this.add.sprite(3*55 + 27, 2*43 + 22, 'pieces', 3);
+        player5 = this.add.sprite(2*55 + 27, 3*43 + 22, 'pieces', 4);
+        player6 = this.add.sprite(3*55 + 27, 3*43 + 22, 'pieces', 5);
+      }
+    })
 </script>
 
 {% endblock %}
