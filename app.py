@@ -176,7 +176,7 @@ def restart(message):
      
     #Do something. Check game engine
     #emit("restart", {"player_grid": gm.gb.player_grid, "deck": gm.deck}, broadcast=True)
-    emit("restart", {"player_grid": "player_grid", "deck": "deck"}, broadcast=True)
+    emit("restart", {"player_grid": jsonify(gm.gb.player_grid), "deck": "deck"}, broadcast=True)
 
 
 @socketio.on('move')
