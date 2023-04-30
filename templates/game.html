@@ -339,12 +339,13 @@
       //first clear the cross outs
 
       //figure out what turn the player is
-
+      console.log('{{ user.username }}');
       //only cross out the ones for that player's hand
       
       console.log(data["deck"]);
+  
       for (var key in data["deck"]){
-        //replace 1 with the player's hand number based on the player_list
+        //replace 1 with the player's hand number based on the 
         if (data["deck"][key]["hand"] == 1) {
           $('.what').each(function(){
             if($(this).text() == key){
