@@ -7,15 +7,17 @@ from flask import Flask, url_for, render_template, request, redirect, session, j
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
+import game
+
 app = Flask(__name__)
 db = SQLAlchemy()
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 
-#random number Generator Thread
 thread = Thread()
 thread_stop_event = Event()
 
 user_list = []
+games = []
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -30,17 +32,6 @@ class User(db.Model):
         self.games_won = 0
         self.games_played = 0
 
-class Game(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    game_id = db.Column(db.String, unique=True) 
-    player_1 = db.Column(db.Integer)
-    player_2 = db.Column(db.Integer)
-    player_3 = db.Column(db.Integer)
-    player_4 = db.Column(db.Integer)
-    player_5 = db.Column(db.Integer)
-    player_6 = db.Column(db.Integer)
-    comments = db.relationship('Comment', backref='game',
-                                lazy='dynamic')
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -133,6 +124,7 @@ def test_connect():
         print("Starting Thread")
         thread = socketio.start_background_task(gameManager)
 
+
 @socketio.on('join')
 def join(message):
     join_room(message['room'])
@@ -147,6 +139,7 @@ def join(message):
     print(user_list)
     emit("join", {"username": session["username"], "room": message['room']}, broadcast=True)
 
+
 @socketio.on("leave", namespace='/')
 def left(message):
     #room = session["current_room"]
@@ -159,15 +152,19 @@ def left(message):
     print(user_list)
     emit("leave", {"username": session["username"], "room": message['room']}, broadcast=True)
 
+
 @socketio.on('new_message')
 def handle_new_message(message):
     print(f"new message: {message}")
     print(session["username"])
     emit("chat", {"username": session["username"], "message": message}, broadcast=True)
 
+
 @socketio.on('button')
 def button_inputs(message):
+    #Do something. Check game engine
     emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
+
 
 app.secret_key = "ThisIsNotASecret:p"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'

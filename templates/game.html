@@ -54,18 +54,45 @@
 			</div>
       </div>
 			<div class="row">
-				<div class="col-md-8">
-					<div class="row">
-						<div class="col card_tray" id="card_tray1">
-							<img alt="Bootstrap Image Preview" src="{{ url_for('static', filename='assets/card.png')}}" />
-						</div>
-						<div class="col card_tray" id="card_tray2">
-							<img alt="Bootstrap Image Preview" src="{{ url_for('static', filename='assets/card.png')}}" />
-						</div>
-						<div class="col card_tray" id="card_tray3">
-							<img alt="Bootstrap Image Preview" src="{{ url_for('static', filename='assets/card.png')}}" />
-						</div>
-					</div>
+				<div class="col-md-8 bottom-tray">
+          <div class="row">
+            <div class="col-md text-center card-image">
+              <ul class="list-group card-list" id="who-list">
+                <li class="list-group-item who">WHO?</li>
+                <li class="list-group-item who active" data-toggle="list">PROF_PLUM</li>
+                <li class="list-group-item who" data-toggle="list">MRS_PEACOCK</li>
+                <li class="list-group-item who" data-toggle="list">MR_GREEN</li>
+                <li class="list-group-item who" data-toggle="list">MRS_WHITE</li>
+                <li class="list-group-item who" data-toggle="list">COL_MUSTARD</li>
+                <li class="list-group-item who" data-toggle="list">MISS_SCARLET</li>
+              </ul>
+            </div>
+            <div class="col-md text-center card-image">
+              <ul class="list-group card-list" id="what-list">
+                <li class="list-group-item what">WHAT?</li>
+                <li class="list-group-item what active" data-toggle="list">ROPE</li>
+                <li class="list-group-item what" data-toggle="list">LEAD_PIPE</li>
+                <li class="list-group-item what" data-toggle="list">KNIFE</li>
+                <li class="list-group-item what" data-toggle="list">WENCH</li>
+                <li class="list-group-item what" data-toggle="list">CANDLE_STICK</li>
+                <li class="list-group-item what" data-toggle="list">REVOLVER</li>
+              </ul>
+            </div>
+            <div class="col-md text-center card-image">
+              <ul class="list-group card-list" id="where-list">
+                <li class="list-group-item where">WHERE?</li>
+                <li class="list-group-item where active" data-toggle="list">STUDY</li>
+                <li class="list-group-item where" data-toggle="list">LIBRARY</li>
+                <li class="list-group-item where" data-toggle="list">HALL</li>
+                <li class="list-group-item where" data-toggle="list">CONSERVATORY</li>
+                <li class="list-group-item where" data-toggle="list">BILLIARD_ROOM</li>
+                <li class="list-group-item where" data-toggle="list">BALL_ROOM</li>
+                <li class="list-group-item where" data-toggle="list">LOUNGE</li>
+                <li class="list-group-item where" data-toggle="list">DINING_ROOM</li>
+                <li class="list-group-item where" data-toggle="list">KITCHEN</li>
+              </ul>
+            </div>
+          </div>
 				</div>
 
 
@@ -94,6 +121,10 @@
     var socket = io.connect("https://clue-test-server-app.herokuapp.com/");
     var numbers_received = [];
     socket.emit('join', {room: "{{game_id}}"});
+
+    function test() {
+      console.log("test worked");
+    }
 
     function addComment(username, message) {
       $('.comments').append("<li><b>" + username + "</b> " + message + "</li>");
@@ -128,10 +159,10 @@
       window.location = "{{ url_for('index') }}";
     });
 
-    $(".btn-secondary").click(function(){    
-        console.log(this.id);
-        socket.emit('button', {room: "{{game_id}}", button: this.id});
-    });
+    //$(".btn-secondary").click(function(){    
+    //    console.log(this.id);
+    //    socket.emit('button', {room: "{{game_id}}", button: this.id});
+    //});
         
 });
 
@@ -159,28 +190,19 @@
   {
       
       this.load.image('tiles', '{{ url_for('static', filename="assets/clue-board-16.png") }}');
-      this.load.image('study', '{{ url_for('static', filename="assets/study.png") }}');
-      this.load.image('hall', '{{ url_for('static', filename="assets/hall.png") }}');
-      this.load.image('lounge', '{{ url_for('static', filename="assets/lounge.png") }}');
-      this.load.image('library', '{{ url_for('static', filename="assets/library.png") }}');
-      this.load.image('clue', '{{ url_for('static', filename="assets/clue.png") }}');
-      this.load.image('diningroom', '{{ url_for('static', filename="assets/diningroom.png") }}');
-      this.load.image('billiardroom', '{{ url_for('static', filename="assets/billiardroom.png") }}');
-      this.load.image('conservatory', '{{ url_for('static', filename="assets/conservatory.png") }}');
-      this.load.image('ballroom', '{{ url_for('static', filename="assets/ballroom.png") }}');
-      this.load.image('kitchen', '{{ url_for('static', filename="assets/kitchen.png") }}');
       this.load.image('piece', '{{ url_for('static', filename="assets/piece.png") }}');
-      this.load.tilemapCSV('map', '{{ url_for('static', filename="assets/tilemap.csv") }}');
-      
-      
-      
       this.load.tilemapCSV('map2', '{{ url_for('static', filename="assets/tilemap2.csv") }}');
       this.load.image('background', '{{ url_for('static', filename="assets/floorplan3.png") }}');
+      this.load.spritesheet({key: 'pieces', 
+        url: '{{ url_for('static', filename="assets/pieces.png") }}', 
+        frameConfig: { 
+          frameWidth: 11, 
+          frameHeight: 18,
+          startFrame: 0,
+          endFrame: 5 
+        }
+      });
 
-
-      //this.load.image('tiles', '{{ url_for('static', filename="assets/floorplan2.png") }}');
-      //this.load.tilemapCSV('map', '{{ url_for('static', filename="assets/tilemap.csv") }}');
-      //this.load.image('map', '{{ url_for('static', filename="assets/floorplan2.png") }}');
   }
 
   var cursors;
@@ -197,28 +219,18 @@
   map = this.make.tilemap({ key: 'map2', tileWidth: 55, tileHeight: 43 });
   tiles = map.addTilesetImage('tiles');
   layer = map.createStaticLayer(0, tiles, 0, 0);
-
-  //add the rooms
-  /*
-  var study = this.add.sprite(56, 32, 'study');
-  var hall = this.add.sprite(192, 56, 'hall');
-
-  var lounge = this.add.sprite(328, 48, 'lounge');
-  var library = this.add.sprite(56, 136, 'library');
-  var clue = this.add.sprite(184, 184, 'clue');
-  var diningroom = this.add.sprite(320, 200, 'diningroom');
-  var billiardroom = this.add.sprite(48, 240, 'billiardroom');
-  var conservatory = this.add.sprite(48, 344, 'conservatory');
-  var ballroom = this.add.sprite(192, 336, 'ballroom');
-  var kitchen = this.add.sprite(336, 336, 'kitchen');
-  */
   var background = this.add.sprite(194, 151, 'background');
 
-  player = this.add.image(2*55 + 27, 43 + 22, 'piece');
 
-
+  //NEED TO GET THE PLAYER LOCATIONS FROM THE SERVER
+  player1 = this.add.sprite(2*55 + 27, 43 + 22, 'pieces', 0);
+  player2 = this.add.sprite(3*55 + 27, 43 + 22, 'pieces', 1);
+  player3 = this.add.sprite(2*55 + 27, 2*43 + 22, 'pieces', 2);
+  player4 = this.add.sprite(3*55 + 27, 2*43 + 22, 'pieces', 3);
+  player5 = this.add.sprite(2*55 + 27, 3*43 + 22, 'pieces', 4);
+  player6 = this.add.sprite(3*55 + 27, 3*43 + 22, 'pieces', 5);
+  
   selectedTile = map.getTileAt(2, 3);
-
   marker = this.add.graphics();
   marker.lineStyle(2, 0x000000, 1);
   marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
@@ -252,10 +264,46 @@
 
       if (this.input.manager.activePointer.isDown)
       {
-        player.setPosition(pointerTileX*55 + 27, pointerTileY*43 + 22);  
+        player1.setPosition(pointerTileX*55 + 27, pointerTileY*43 + 22);  
       }
 
     }
+
+  $(".btn-secondary").click(function(){
+        console.log(this.id);
+        
+        //1) Check if it's this player's turn
+
+        //2) Check if it is a valid move
+
+        //3) Process the move
+
+        //4) Move up, down, left, right, secret
+
+        //5) Make accusation
+        if(this.id=="accusation-button") {
+        }
+
+        //6) Make suggestion
+        if(this.id=="suggestion-button") {
+         var who = $('ul#who-list').find('li.active').text();
+         var what = $('ul#what-list').find('li.active').text();
+         var where = $('ul#where-list').find('li.active').text();
+         
+         socket.emit('new_message', who);
+
+         console.log(who,what,where);
+
+        }
+
+        //socket.emit('button', {room: "{{game_id}}", button: this.id});
+        if(this.id=="left-button") {
+          console.log(this.id);
+          player1.setPosition(player1.x - 55, player1.y); 
+        }    
+         
+        
+    });
 </script>
 
 {% endblock %}
