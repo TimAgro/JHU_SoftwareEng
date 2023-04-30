@@ -171,7 +171,7 @@ def restart(message):
     #    for game in games:
     #        if game.game_ID ==  message['room']:
     #            game.restart()
-    gm = game.GameManager([1,2,3,4,5,6],1)
+    gm = game.GameManager(["test",2,3,4,5,6],1)
     games.append(gm)
 
     player_grid = []
@@ -188,10 +188,14 @@ def restart(message):
                 deck_list.append({"card":item, "hand": i})
     deck_dict = {item['card']:item for item in deck_list}
 
-    #players = jsonify({'players': player_grid})
-    #Do something. Check game engine
-    #emit("restart", {"player_grid": gm.gb.player_grid, "deck": gm.deck}, broadcast=True)
-    emit("restart", {"player_grid": player_dict, "deck": deck_dict}, broadcast=True)
+    #Do the same for players
+    players_list = []
+    for i, item in enumerate(gm.players):
+        if item != 0:
+            players_list.append({"player_ID":item, "order": i})
+    players_dict = {item['player_ID']:item for item in players_list}
+
+    emit("restart", {"player_grid": player_dict, "deck": deck_dict, "players_list": players_dict}, broadcast=True)
 
 
 @socketio.on('move')
