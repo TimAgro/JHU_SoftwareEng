@@ -182,10 +182,11 @@ def restart(message):
     player_dict = {item['type']:item for item in player_grid}
 
     deck_list = []
-    for i, item in enumerate(gm.deck):
-        if item != 0:
-            deck_list.append({"type":item})
-    deck_dict = {item['type']:item for item in deck_list}
+    for i, list in enumerate(gm.deck.hands):
+        for j, item in enumerate(list):
+            if item != 0:
+                deck_list.append({"card":item, "hand": i})
+    deck_dict = {item['card']:item for item in deck_list}
 
     #players = jsonify({'players': player_grid})
     #Do something. Check game engine

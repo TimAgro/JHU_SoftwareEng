@@ -125,3 +125,7 @@ Customization*/
     font-style: italic;
     font-weight: bolder;
 }
+
+.stroked{ 
+  text-decoration: line-through; 
+}
