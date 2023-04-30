@@ -120,9 +120,9 @@ def test_connect():
     print('Client connected')
 
     #Start the game manager if it hasn't been started already
-    if not thread.is_alive():
-        print("Starting Thread")
-        thread = socketio.start_background_task(gameManager)
+    #if not thread.is_alive():
+        #print("Starting Thread")
+        #thread = socketio.start_background_task(gameManager)
 
 
 @socketio.on('join')
@@ -173,10 +173,16 @@ def restart(message):
     #            game.restart()
     gm = game.GameManager([1,2,3,4,5,6],1)
     games.append(gm)
+
+    player_grid = {}
+    for i, list in enumerate(gm.gb.player_grid):
+        for j, item in enumerate(list):
+            player_grid.append({"type": item, "x": i, "y": j, "value": item})
      
+    print(player_grid)
     #Do something. Check game engine
     #emit("restart", {"player_grid": gm.gb.player_grid, "deck": gm.deck}, broadcast=True)
-    emit("restart", {"player_grid": json.dumps(gm.gb.player_grid), "deck": "deck"}, broadcast=True)
+    emit("restart", {"player_grid": player_grid, "deck": "deck"}, broadcast=True)
 
 
 @socketio.on('move')
