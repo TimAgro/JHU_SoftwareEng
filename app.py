@@ -94,7 +94,7 @@ def lobby():
 
 @app.route('/game/<game_id>', methods=['GET'])
 #This will be the page that you get sent to after logging in
-def game(game_id, methods = ['GET']):
+def gameroute(game_id, methods = ['GET']):
     #users = db.session.query(User).all()
     if session.get('logged_in'):
         #return render_template('game.html')
@@ -103,14 +103,14 @@ def game(game_id, methods = ['GET']):
         return render_template('index.html', message="Hello!")
 
 
-def gameManager():
-    #infinite loop of magical random numbers
-    print("Making random numbers")
-    while not thread_stop_event.isSet():
-        number = round(random()*10, 3)
-        print(number)
-        socketio.emit('newnumber', {'number': number}, namespace='/test')
-        socketio.sleep(2)
+#def gameManager():
+#    #infinite loop of magical random numbers
+#    print("Making random numbers")
+#    while not thread_stop_event.isSet():
+#        number = round(random()*10, 3)
+#        print(number)
+#        socketio.emit('newnumber', {'number': number}, namespace='/test')
+#        socketio.sleep(2)
 
 
 @socketio.on('connect', namespace='/test')
@@ -171,7 +171,8 @@ def restart(message):
     #    for game in games:
     #        if game.game_ID ==  message['room']:
     #            game.restart()
-    gm = game.GameManager([1,2,3,4,5],1)
+    game.
+    gm = game.GameManager([1,2,3,4,5,6],1)
     games.append(gm)
      
     #Do something. Check game engine
