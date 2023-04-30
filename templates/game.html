@@ -314,12 +314,7 @@
     socket.on("chat", function(data){
       console.log("comment emitted ");
       if (data["message"] == "Restart") {
-        player1 = this.add.sprite(2*55 + 27, 43 + 22, 'pieces', 0);
-        player2 = this.add.sprite(3*55 + 27, 43 + 22, 'pieces', 1);
-        player3 = this.add.sprite(2*55 + 27, 2*43 + 22, 'pieces', 2);
-        player4 = this.add.sprite(3*55 + 27, 2*43 + 22, 'pieces', 3);
-        player5 = this.add.sprite(2*55 + 27, 3*43 + 22, 'pieces', 4);
-        player6 = this.add.sprite(3*55 + 27, 3*43 + 22, 'pieces', 5);
+        player1.setPosition(player1.x - 55, player1.y); 
       }
     })
 </script>
