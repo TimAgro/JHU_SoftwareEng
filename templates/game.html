@@ -324,15 +324,15 @@
         for (let j = 0; j < data["player_grid"][i].length; j++) {
           if (data["player_grid"][i][j]=="PROF_PLUM"){
             player1.setPosition(i*55 + 27, j*43 + 22);
-          } else if (arr[i][j]=="MRS_PEACOCK"){
+          } else if (data["player_grid"][i][j]=="MRS_PEACOCK"){
             player2.setPosition(i*55 + 27, j*43 + 22);
-          } else if (arr[i][j]=="MR_GREEN"){
+          } else if (data["player_grid"][i][j]=="MR_GREEN"){
             player3.setPosition(i*55 + 27, j*43 + 22);
-          } else if (arr[i][j]=="MRS_WHITE"){
+          } else if (data["player_grid"][i][j]=="MRS_WHITE"){
             player4.setPosition(i*55 + 27, j*43 + 22);
-          } else if (arr[i][j]=="COL_MUSTARD"){
+          } else if (data["player_grid"][i][j]=="COL_MUSTARD"){
             player5.setPosition(i*55 + 27, j*43 + 22);
-          } else if (arr[i][j]=="MISS_SCARLET"){
+          } else if (data["player_grid"][i][j]=="MISS_SCARLET"){
             player6.setPosition(i*55 + 27, j*43 + 22);
           }
         }
