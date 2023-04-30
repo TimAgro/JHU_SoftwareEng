@@ -313,7 +313,13 @@
 
     socket.on("restart", function(data){
       console.log(data["player_grid"]);
-      
+      player1.setPosition(-100,-100);
+      player2.setPosition(-100,-100);
+      player3.setPosition(-100,-100);
+      player4.setPosition(-100,-100);
+      player5.setPosition(-100,-100);
+      player6.setPosition(-100,-100);
+
       for (let i = 0; i < data["player_grid"].length; i++) {
         for (let j = 0; j < data["player_grid"][i].length; j++) {
           if (data["player_grid"][i][j]=="PROF_PLUM"){
