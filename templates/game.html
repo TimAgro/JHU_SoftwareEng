@@ -170,6 +170,9 @@
 
 
 <script>
+
+  var socket = io.connect("https://clue-test-server-app.herokuapp.com/");
+  
   var config = {
       type: Phaser.AUTO,
       width: 7 * 55, // Number of tiles * size of the tile
