@@ -313,13 +313,6 @@
 
     socket.on("restart", function(data){
       console.log(data["player_grid"]);
-
-      player1.destroy();
-      player2.destroy();
-      player3.destroy();
-      player4.destroy();
-      player5.destroy();
-      player6.destroy();
       
       for (let i = 0; i < data["player_grid"].length; i++) {
         for (let j = 0; j < data["player_grid"][i].length; j++) {
