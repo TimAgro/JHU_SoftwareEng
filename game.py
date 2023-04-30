@@ -83,7 +83,8 @@ class GameBoard:
 
 
 class GameManager:
-    def __init__(self, player_IDs):
+    def __init__(self, player_IDs, game_ID):
+        self.game_ID = game_ID
         self.players = []
         self.turn_count = 0
         self.gb = GameBoard(len(player_IDs))

@@ -165,6 +165,37 @@ def button_inputs(message):
     #Do something. Check game engine
     emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
 
+@socketio.on('restart')
+def restart(message):
+    #if len(games) > 0:
+    #    for game in games:
+    #        if game.game_ID ==  message['room']:
+    #            game.restart()
+    gm = game.GameManager([1,2,3,4,5],1)
+    games.append(gm)
+     
+    #Do something. Check game engine
+    emit("restart", {"player_grid": gm.player_grid, "deck": gm.deck}, broadcast=True)
+
+
+@socketio.on('move')
+def move(message):
+    #Do something. Check game engine
+    emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
+
+
+@socketio.on('suggestion')
+def suggestion(message):
+    #Do something. Check game engine
+    emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
+
+
+@socketio.on('accusation')
+def accusation(message):
+    #Do something. Check game engine
+    emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
+
+
 
 app.secret_key = "ThisIsNotASecret:p"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'

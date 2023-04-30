@@ -38,17 +38,17 @@ class Test(unittest.TestCase):
 
     def test_gamemanager(self):
         print("#########################Create game manager#########################")
-        gm = game.GameManager([1,2,3,4,5,6])
+        gm = game.GameManager([1,2,3,4,5,6],1)
         print(gm.players)
 
     def test_check_turn(self):
         print("#########################Check turn#########################")
-        gm = game.GameManager([1,2,3,4,5,6])
+        gm = game.GameManager([1,2,3,4,5,6],1)
         print(gm.check_turn(1))
 
     def test_move(self):
         print("#########################move player#########################")
-        gm = game.GameManager([1,2,3,4,5,6])
+        gm = game.GameManager([1,2,3,4,5,6],1)
         print(np.array(gm.gb.player_grid))
         print(gm.move(1,"down"))
         print(gm.move(2,"down"))
@@ -66,7 +66,7 @@ class Test(unittest.TestCase):
 
     def test_secret_move(self):
         print("#########################move player#########################")
-        gm = game.GameManager([1,2,3,4,5,6])
+        gm = game.GameManager([1,2,3,4,5,6],1)
         print(np.array(gm.gb.player_grid))
         print(gm.move(1,"up"))
         print(np.array(gm.gb.player_grid))
@@ -80,14 +80,14 @@ class Test(unittest.TestCase):
 
     def test_accusation(self):
         print("#########################Accusation#########################")
-        gm = game.GameManager([1,2,3,4,5,6])
+        gm = game.GameManager([1,2,3,4,5,6],1)
         solution  = gm.deck.solution
         result = gm.check_accusation(1, solution[0], solution[1], solution[2])
         print(result)
 
     def test_suggestion(self):
         print("#########################Suggestion#########################")
-        gm = game.GameManager([1,2,3,4,5,6])
+        gm = game.GameManager([1,2,3,4,5,6],1)
         solution  = gm.deck.solution
         print(np.array(gm.deck.hands))
         result = gm.check_suggestion(1, 'KNIFE', 'PROF_PLUM', 'LOUNGE')

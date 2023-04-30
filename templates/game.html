@@ -308,14 +308,14 @@
     });
 
     $('#start-button').click(function() {
-      socket.emit('new_message', "Restart");
+      socket.emit('restart', "Restart");
     });
 
-    socket.on("chat", function(data){
-      console.log("comment emitted ");
-      if (data["message"] == "Restart") {
-        player1.setPosition(player1.x - 55, player1.y); 
-      }
+    socket.on("restart", function(data){
+      console.log(data["player_grid"]);
+      //if (data["message"] == "Restart") {
+      //  player1.setPosition(player1.x - 55, player1.y); 
+      //}
     })
 </script>
 
