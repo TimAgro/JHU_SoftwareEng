@@ -324,18 +324,18 @@
       for (let i = 0; i < data["player_grid"].length; i++) {
         for (let j = 0; j < data["player_grid"][i].length; j++) {
           console.log(data["player_grid"][i][j]);
-          if (data["player_grid"][i][j]=="PROF_PLUM"){
-            player1.setPosition(i*55 + 27, j*43 + 22);
-          } else if (data["player_grid"][i][j]=="MRS_PEACOCK"){
-            player2.setPosition(i*55 + 27, j*43 + 22);
-          } else if (data["player_grid"][i][j]=="MR_GREEN"){
-            player3.setPosition(i*55 + 27, j*43 + 22);
-          } else if (data["player_grid"][i][j]=="MRS_WHITE"){
-            player4.setPosition(i*55 + 27, j*43 + 22);
-          } else if (data["player_grid"][i][j]=="COL_MUSTARD"){
-            player5.setPosition(i*55 + 27, j*43 + 22);
-          } else if (data["player_grid"][i][j]=="MISS_SCARLET"){
-            player6.setPosition(i*55 + 27, j*43 + 22);
+          if (key=="PROF_PLUM"){
+            player1.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="MRS_PEACOCK"){
+            player2.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="MR_GREEN"){
+            player3.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="MRS_WHITE"){
+            player4.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="COL_MUSTARD"){
+            player5.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="MISS_SCARLET"){
+            player6.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
           }
         }
       }
@@ -346,7 +346,19 @@
         console.log( key, data["player_grid"][key]["type"] );
         console.log( key, data["player_grid"][key]["x"] );
         console.log( key, data["player_grid"][key]["y"] );
-
+        if (key=="PROF_PLUM"){
+            player1.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="MRS_PEACOCK"){
+            player2.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="MR_GREEN"){
+            player3.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="MRS_WHITE"){
+            player4.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="COL_MUSTARD"){
+            player5.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          } else if (key=="MISS_SCARLET"){
+            player6.setPosition(data["player_grid"][key]["x"]*55 + 27, data["player_grid"][key]["y"]*43 + 22);
+          }
       }
         
       //if (data["message"] == "Restart") {
