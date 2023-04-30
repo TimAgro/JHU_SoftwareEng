@@ -167,10 +167,10 @@ def button_inputs(message):
 
 @socketio.on('restart')
 def restart(message):
-    #if len(games) > 0:
-    #    for game in games:
-    #        if game.game_ID ==  message['room']:
-    #            game.restart()
+    
+
+    ######figure out which players are in the game
+
     gm = game.GameManager(["test",2,3,4,5,6],1)
     games.append(gm)
 
@@ -193,14 +193,22 @@ def restart(message):
     for i, item in enumerate(gm.players):
         if item != 0:
             players_list.append({"player_ID":item, "order": i})
-    players_dict = {item['player_ID']:item for item in players_list}
+    print(players_list)
+    #players_dict = {item['player_ID']:item for item in players_list}
 
-    emit("restart", {"player_grid": player_dict, "deck": deck_dict, "players_dict": players_dict, "turn_count": gm.turn_count}, broadcast=True)
+    emit("restart", {"player_grid": player_dict, "deck": deck_dict, "turn_count": gm.turn_count}, broadcast=True)
 
 
 @socketio.on('move')
 def move(message):
     #Do something. Check game engine
+
+    #find the gm object in games
+
+    #do the move,
+    #if nothing don't emit anything
+    #else emit the move to all
+    #update the game in games[]
     emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
 
 
