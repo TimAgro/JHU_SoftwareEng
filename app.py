@@ -170,7 +170,7 @@ def restart(message):
     
 
     ######figure out which players are in the game
-
+    ##ONLY register real player_ids
     gm = game.GameManager(["test",2,3,4,5,6],1)
     games.append(gm)
 

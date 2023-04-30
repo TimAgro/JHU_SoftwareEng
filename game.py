@@ -94,7 +94,7 @@ class GameManager:
     def _init_players(self, player_IDs):
         i=0
         for player_ID in player_IDs:
-            self.players.append({'player_ID':player_ID, 'type': SuspectType(i).name, 'active': True})
+            self.players.append({'player_ID':player_ID, 'type': SuspectType(i).name, 'active': True, 'hand': i})
             i+=1
 
     def check_turn(self, player_ID):
