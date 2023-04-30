@@ -322,6 +322,7 @@
 
       for (let i = 0; i < data["player_grid"].length; i++) {
         for (let j = 0; j < data["player_grid"][i].length; j++) {
+          console.log(data["player_grid"][i][j]);
           if (data["player_grid"][i][j]=="PROF_PLUM"){
             player1.setPosition(i*55 + 27, j*43 + 22);
           } else if (data["player_grid"][i][j]=="MRS_PEACOCK"){
