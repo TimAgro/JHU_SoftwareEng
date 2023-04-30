@@ -175,7 +175,7 @@ def restart(message):
     games.append(gm)
      
     #Do something. Check game engine
-    emit("restart", {"player_grid": gm.player_grid, "deck": gm.deck}, broadcast=True)
+    emit("restart", {"player_grid": gm.gb.player_grid, "deck": gm.deck}, broadcast=True)
 
 
 @socketio.on('move')
