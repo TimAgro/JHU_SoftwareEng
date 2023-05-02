@@ -286,29 +286,11 @@
   $(".btn-secondary").click(function(){
         console.log(this.id);
 
-  
-        //1) Check if it's this player's turn
-
-        //for 
-
-
-        //figure out what hand the player is
-        //if turn_count corrresponds to order in players_dict, it's them
-        //console.log(data["players_dict"]);
-        //console.log(data["turn_count"]);
-        
-
-        //2) Check if it is a valid move
-
-        //3) Process the move
-
-        //4) Move up, down, left, right, secret
-
-        //5) Make accusation
+        //Make accusation
         if(this.id=="accusation-button") {
         }
 
-        //6) Make suggestion
+        //Make suggestion
         if(this.id=="suggestion-button") {
          var who = $('ul#who-list').find('li.active').text();
          var what = $('ul#what-list').find('li.active').text();
@@ -337,14 +319,18 @@
         if(this.id=="secret-button") {
           socket.emit('move', {game_id: game_id, player_id: player_id, direction:"secret"});
         }       
-         
     });
 
     $('#start-button').click(function() {
       //socket.emit('restart', "Restart");
       socket.emit('restart', {game_id: "{{game_id}}"});
     });
-
+    socket.on("move", function(data){
+      //console.log(data["player_grid"]);
+      if (data["move_result"] != Null){
+        console.log(data["move_resul"]);
+      }
+    });
     socket.on("restart", function(data){
       //console.log(data["player_grid"]);
 
