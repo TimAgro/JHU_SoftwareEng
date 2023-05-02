@@ -188,7 +188,7 @@ def move(message):
             gm =this_game.game_ID
             break
     
-    print(game_id,player_id, message['direction'])
+    print(game_ID,player_id, message['direction'])
 
     move_result = gm.move(player_id, message['direction'])
     print(move_result)
