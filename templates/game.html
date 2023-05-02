@@ -329,7 +329,8 @@
     });
 
     $('#start-button').click(function() {
-      socket.emit('restart', "Restart");
+      //socket.emit('restart', "Restart");
+      socket.emit('restart', {game_id: "{{game_id}}"});
     });
 
     socket.on("restart", function(data){
