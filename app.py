@@ -146,12 +146,7 @@ def restart(message):
     
     ######figure out which players are in the game
     ##ONLY register real player_ids
-    game_players = []
-    for i in range(len(user_list)):
-        if (user_list[i]['room'] == message['game_id']):
-            game_players.append(user_list[i]['username'])
-    
-    print(game_players)
+    print(user_list)
 
 
     ################CHECK HERE########################
