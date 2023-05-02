@@ -144,6 +144,9 @@ def button_inputs(message):
 @socketio.on('restart')
 def restart(message):
     
+    #Should find and replace the correct game
+    games = []
+
     ######figure out which players are in the game
     ##ONLY register real player_ids
     print(user_list)
@@ -196,8 +199,8 @@ def move(message):
 
     move_result = gm.move(player_id, message['direction'])
     players_dict = {item['player_ID']:item for item in gm.players}
-
-    emit("move",{"player_id": player_id, "move_result": move_result, "players_dict": players_dict}, broadcast=True)
+    
+    emit("move",{"player_id": player_id, "move_result": move_result, "players_dict": players_dict,"turn_count": gm.turn_count}, broadcast=True)
 
 
 @socketio.on('suggestion')
