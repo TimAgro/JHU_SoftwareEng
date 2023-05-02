@@ -111,6 +111,10 @@
 
 			</div>
 	</div>
+
+  <meta id="game_id" data-name="{{game_id}}">
+  <meta id="player_id" data-name="{{player_id}}">
+
 </div>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
 
@@ -218,6 +222,13 @@
 
   function create ()
   {
+
+  //get page variables
+  //console.log($('#game_id').data()["name"]);
+  game_id = $('#game_id').data()["name"];
+  //console.log($('#player_id').data()["name"]);
+  player_id = $('#player_id').data()["name"];
+
   //Create the tilemap
   map = this.make.tilemap({ key: 'map2', tileWidth: 55, tileHeight: 43 });
   tiles = map.addTilesetImage('tiles');
@@ -265,17 +276,27 @@
       marker.x = map.tileToWorldX(pointerTileX);
       marker.y = map.tileToWorldY(pointerTileY);
 
-      if (this.input.manager.activePointer.isDown)
-      {
-        player1.setPosition(pointerTileX*55 + 27, pointerTileY*43 + 22);  
-      }
+      //if (this.input.manager.activePointer.isDown)
+      //{
+      //  player1.setPosition(pointerTileX*55 + 27, pointerTileY*43 + 22);  
+      //}
 
     }
 
   $(".btn-secondary").click(function(){
         console.log(this.id);
-        
+
+  
         //1) Check if it's this player's turn
+
+        //for 
+
+
+        //figure out what hand the player is
+        //if turn_count corrresponds to order in players_dict, it's them
+        //console.log(data["players_dict"]);
+        //console.log(data["turn_count"]);
+        
 
         //2) Check if it is a valid move
 
@@ -338,10 +359,9 @@
 
       //first clear the cross outs
 
-      //figure out what turn the player is
+      //figure out what hand the player is
       //if turn_count corrresponds to order in players_dict, it's them
       console.log(data["players_dict"]);
-      console.log(data["turn_count"]);
 
       //only cross out the ones for that player's hand
       //check 

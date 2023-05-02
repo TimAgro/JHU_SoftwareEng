@@ -83,34 +83,15 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/lobby', methods=['GET'])
-#Once you are logged in, you are sent to lobby where you can join or create a game
-def lobby():
-    if session.get('logged_in'):
-        return render_template('home.html')
-    else:
-        return render_template('index.html', message="Hello!")
-
-
 @app.route('/game/<game_id>', methods=['GET'])
 #This will be the page that you get sent to after logging in
 def gameroute(game_id, methods = ['GET']):
     #users = db.session.query(User).all()
     if session.get('logged_in'):
         #return render_template('game.html')
-        return render_template("game.html",users=user_list, game_id=game_id)
+        return render_template("game.html",users=user_list, game_id=game_id,player_id=session["username"])
     else:
         return render_template('index.html', message="Hello!")
-
-
-#def gameManager():
-#    #infinite loop of magical random numbers
-#    print("Making random numbers")
-#    while not thread_stop_event.isSet():
-#        number = round(random()*10, 3)
-#        print(number)
-#        socketio.emit('newnumber', {'number': number}, namespace='/test')
-#        socketio.sleep(2)
 
 
 @socketio.on('connect', namespace='/test')
@@ -118,11 +99,6 @@ def test_connect():
     # need visibility of the global thread object
     global thread
     print('Client connected')
-
-    #Start the game manager if it hasn't been started already
-    #if not thread.is_alive():
-        #print("Starting Thread")
-        #thread = socketio.start_background_task(gameManager)
 
 
 @socketio.on('join')
@@ -168,10 +144,11 @@ def button_inputs(message):
 @socketio.on('restart')
 def restart(message):
     
-
     ######figure out which players are in the game
     ##ONLY register real player_ids
-    gm = game.GameManager(["test",2,3,4,5,6],1)
+    users = message["users"]
+    print(users)
+    gm = game.GameManager(["test",2,3,4,5,6],message['game_id'])
     games.append(gm)
 
     player_grid = []
@@ -192,34 +169,67 @@ def restart(message):
     players_dict = {item['player_ID']:item for item in gm.players}
     print(players_dict)
 
-
     emit("restart", {"player_grid": player_dict, "deck": deck_dict, "players_dict": players_dict, "turn_count": gm.turn_count}, broadcast=True)
 
 
 @socketio.on('move')
 def move(message):
-    #Do something. Check game engine
+    #Get the game_ID
+    game_id = message['game_id']
+    player_id = message['player_id']
+     
+    for this_game in games:
+        if this_game.game_id == game_id:
+            gm =this_game.game_id
+            break
 
-    #find the gm object in games
-
-    #do the move,
-    #if nothing don't emit anything
-    #else emit the move to all
-    #update the game in games[]
-    emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
+    move_result = gm.move(player_id, message['direction'])
+    emit("move",{"player_id": player_id, "move_result": move_result}, broadcast=True)
 
 
 @socketio.on('suggestion')
 def suggestion(message):
-    #Do something. Check game engine
-    emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
+    #Get the game_ID
+    game_id = message['game_id']
+    player_id = message['player_id']
+     
+    for this_game in games:
+        if this_game.game_id == game_id:
+            gm =this_game.game_id
+            break
+
+    suggestion_result = gm.check_suggestion(player_id, message['card1'], message['card2'], message['card3'])
+    emit("suggestion",{"player_id": player_id, "suggestion_result": suggestion_result}, broadcast=True)
 
 
 @socketio.on('accusation')
 def accusation(message):
-    #Do something. Check game engine
-    emit("chat", {"username": "Game", "message": message['button'] + " pressed by " + session["username"]}, broadcast=True)
+    #Get the game_ID
+    game_id = message['game_id']
+    player_id = message['player_id']
+     
+    for this_game in games:
+        if this_game.game_id == game_id:
+            gm =this_game.game_id
+            break
 
+    accusation_result = gm.check_accusation(player_id, message['card1'], message['card2'], message['card3'])
+    emit("accusation",{"player_id": player_id, "accusation_result": accusation_result}, broadcast=True)
+
+
+@socketio.on('turn_check')
+def turn_check(message):
+    #Get the game_ID
+    game_id = message['game_id']
+    player_id = message['player_id']
+     
+    for this_game in games:
+        if this_game.game_id == game_id:
+            gm =this_game.game_id
+            break
+
+    turn_check = gm.check_turn(player_id)
+    emit("accusation",{"player_id": player_id, "turn_check_result": turn_check}, broadcast=True)
 
 
 app.secret_key = "ThisIsNotASecret:p"
