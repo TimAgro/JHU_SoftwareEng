@@ -19,7 +19,7 @@
             <div class="list-group w-100 d-inline-block overflow-auto" id ="player_list">
               <a href="#" class="list-group-item list-group-item-action active">Players</a>
                 {% for user in users %}
-                <div class="list-group-item justify-content-between" id="{{ user.username }}">{{ user.username }}<span class="badge badge-secondary badge-pill">Purple</span>
+                <div class="list-group-item justify-content-between" id="{{ user.username }}">{{ user.username }}
                 </div>
                 {% endfor %}
             </div>
