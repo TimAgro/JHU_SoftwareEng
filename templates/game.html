@@ -335,9 +335,9 @@
         hand = 0
         console.log(data["players_dict"]);
         for (var key in data["players_dict"]){
-          if (data["players_dict"][key]["player_ID"] == player_id){
-            hand = data["players_dict"][key]["hand"];
-            console.log(data["players_dict"][key]["hand"]);
+          if (data["players_dict"][key]["player_ID"] == data["player_id"]){
+            hand = key;
+            console.log(hand);
           }
         }
         console.log(hand);
