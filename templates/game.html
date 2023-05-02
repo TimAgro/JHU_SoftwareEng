@@ -343,6 +343,10 @@
       player6.setPosition(-100,-100);
 
       for (var key in data["player_grid"]){
+        if (data["player_grid"][key]["player_id"] == player_id){
+          hand = data["player_grid"][key]["hand"];
+          console.log(hand)
+        }
         if (key=="PROF_PLUM"){
             player1.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
           } else if (key=="MRS_PEACOCK"){
@@ -368,21 +372,23 @@
       //check 
       console.log(data["deck"]);
       for (var key in data["deck"]){
-        $('.what').each(function(){
-          if($(this).text() == key){
-            $(this).toggleClass('stroked');
-          }
-        });
-        $('.who').each(function(){
-          if($(this).text() == key){
-            $(this).toggleClass('stroked');
-          }
-        }); 
-        $('.where').each(function(){
-          if($(this).text() == key){
-            $(this).toggleClass('stroked');
-          }
-        });  
+        if (data["deck"][key]["hand"] == hand){
+          $('.what').each(function(){
+            if($(this).text() == key){
+              $(this).toggleClass('stroked');
+            }
+          });
+          $('.who').each(function(){
+            if($(this).text() == key){
+              $(this).toggleClass('stroked');
+            }
+          }); 
+          $('.where').each(function(){
+            if($(this).text() == key){
+              $(this).toggleClass('stroked');
+            }
+          });
+        }  
       }
 
     })
