@@ -329,12 +329,41 @@
       //console.log(data["player_grid"]);
       if (data["move_result"] != null){
         console.log(data["move_result"]);
-        player1.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
-        
+
+        //figure out what hand the player is
+        //if turn_count corrresponds to order in players_dict, it's them
+        hand = 0
+        console.log(data["players_dict"]);
+        for (var key in data["players_dict"]){
+          if (data["players_dict"][key]["player_ID"] == player_id){
+            hand = data["players_dict"][key]["hand"];
+            console.log(data["players_dict"][key]["hand"]);
+          }
+        }
+
+        if (hand==0){
+          player1.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
+        }
+        else if (hand==1){
+          player2.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
+        }
+        else if (hand==2){
+          player3.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
+        }
+        else if (hand==3){
+          player4.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
+        }
+        else if (hand==4){
+          player5.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
+        }
+        else if (hand==5){
+          player6.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
+        }
       }
     });
     socket.on("restart", function(data){
       //console.log(data["player_grid"]);
+
 
       //take the pieces off the board for now
       player1.setPosition(-100,-100);
