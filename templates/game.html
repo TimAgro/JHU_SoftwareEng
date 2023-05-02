@@ -332,33 +332,33 @@
 
         //figure out what hand the player is
         //if turn_count corrresponds to order in players_dict, it's them
-        hand = 0
+        turn = 0
         console.log(data["players_dict"]);
         for (var key in data["players_dict"]){
-          hand += 1;
+          turn += 1;
           if (data["players_dict"][key]["player_ID"] == data["player_id"]){
             break;
           }
           
         }
-        console.log(hand);
+        console.log(turn);
 
-        if (hand==0){
+        if (turn==1){
           player1.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
         }
-        else if (hand==1){
+        else if (turn==2){
           player2.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
         }
-        else if (hand==2){
+        else if (turn==3){
           player3.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
         }
-        else if (hand==3){
+        else if (turn==4){
           player4.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
         }
-        else if (hand==4){
+        else if (turn==5){
           player5.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
         }
-        else if (hand==5){
+        else if (turn==6){
           player6.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
         }
       }
