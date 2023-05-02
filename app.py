@@ -191,12 +191,13 @@ def move(message):
     #        gm =this_game.game_ID
     #        break
     gm = games[0]
-    
+
     print(game_ID,player_id, message['direction'])
 
     move_result = gm.move(player_id, message['direction'])
-    print(move_result)
-    emit("move",{"player_id": player_id, "move_result": move_result}, broadcast=True)
+    players_dict = {item['player_ID']:item for item in gm.players}
+
+    emit("move",{"player_id": player_id, "move_result": move_result, "players_dict": players_dict}, broadcast=True)
 
 
 @socketio.on('suggestion')
