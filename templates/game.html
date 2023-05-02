@@ -343,8 +343,6 @@
       player6.setPosition(-100,-100);
 
       for (var key in data["player_grid"]){
-        console.log( data["player_grid"][key]["player_id"]);
-        console.log( data["player_grid"][key]["hand"]);
         //if (data["player_grid"][key]["player_id"] == player_id){
         //  hand = data["player_grid"][key]["hand"];
         //  console.log(hand)
@@ -368,7 +366,14 @@
 
       //figure out what hand the player is
       //if turn_count corrresponds to order in players_dict, it's them
+      hand = 0
       console.log(data["players_dict"]);
+      for (var key in data["players_dict"]){
+        if (data["players_dict"][key]["player_ID"] == player_id){
+          hand = data["players_dict"][key]["hand"];
+          console.log(data["players_dict"][key]["hand"]);
+        }
+      }
 
       //only cross out the ones for that player's hand
       //check 
