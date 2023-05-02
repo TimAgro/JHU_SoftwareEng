@@ -180,12 +180,12 @@ def restart(message):
 @socketio.on('move')
 def move(message):
     #Get the game_ID
-    game_id = message['game_id']
+    game_ID = message['game_id']
     player_id = message['player_id']
      
     for this_game in games:
-        if this_game.game_id == game_id:
-            gm =this_game.game_id
+        if this_game.game_ID == game_ID:
+            gm =this_game.game_ID
             break
     
     print(game_id,player_id, message['direction'])
@@ -213,12 +213,12 @@ def suggestion(message):
 @socketio.on('accusation')
 def accusation(message):
     #Get the game_ID
-    game_id = message['game_id']
+    game_ID = message['game_id']
     player_id = message['player_id']
      
     for this_game in games:
-        if this_game.game_id == game_id:
-            gm =this_game.game_id
+        if this_game.game_ID == game_ID:
+            gm =this_game.game_ID
             break
 
     accusation_result = gm.check_accusation(player_id, message['card1'], message['card2'], message['card3'])
