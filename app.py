@@ -183,13 +183,14 @@ def move(message):
     game_ID = message['game_id']
     player_id = message['player_id']
     
-    print(games) 
-    for this_game in games:
-        print(this_game)
-        print(this_game.game_ID)
-        if this_game.game_ID == game_ID:
-            gm =this_game.game_ID
-            break
+    #print(games) 
+    #for this_game in games:
+    #    print(this_game)
+    #    print(this_game.game_ID)
+    #    if this_game.game_ID == game_ID:
+    #        gm =this_game.game_ID
+    #        break
+    gm = games[0]
     
     print(game_ID,player_id, message['direction'])
 
