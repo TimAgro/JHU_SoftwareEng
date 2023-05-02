@@ -342,19 +342,18 @@
       player5.setPosition(-100,-100);
       player6.setPosition(-100,-100);
 
-      no_players = data["players_dict"].length();
       for (var key in data["player_grid"]){
         if (key=="PROF_PLUM"){
             player1.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
-          } else if (key=="MRS_PEACOCK" && no_players > 1){
+          } else if (key=="MRS_PEACOCK"){
             player2.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
-          } else if (key=="MR_GREEN" && no_players > 2){
+          } else if (key=="MR_GREEN"){
             player3.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
-          } else if (key=="MRS_WHITE" && no_players > 3){
+          } else if (key=="MRS_WHITE"){
             player4.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
-          } else if (key=="COL_MUSTARD" && no_players > 4){
+          } else if (key=="COL_MUSTARD"){
             player5.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
-          } else if (key=="MISS_SCARLET" && no_players > 5){
+          } else if (key=="MISS_SCARLET"){
             player6.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
           }
       }
