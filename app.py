@@ -200,8 +200,11 @@ def suggestion(message):
     #Get the game_ID
     game_ID = message['game_id']
     player_id = message['player_id']
-     
+
+    print(games) 
     for this_game in games:
+        print(this_game)
+        print(this_game.game_ID)
         if this_game.game_ID == game_ID:
             gm =this_game.game_ID
             break
