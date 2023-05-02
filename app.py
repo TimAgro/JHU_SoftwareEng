@@ -147,12 +147,13 @@ def restart(message):
     ######figure out which players are in the game
     ##ONLY register real player_ids
     print(user_list)
+    user_array = []
+    for i in range(len(user_list)):
+        if (user_list[i]['room'] == message['game_id']):
+            user_array.append(user_list[i]['username'])
 
-
-    ################CHECK HERE########################
-
-
-    gm = game.GameManager(["test",2,3,4,5,6],message['game_id'])
+    #add players from the room into the game manager.
+    gm = game.GameManager(user_array,message['game_id'])
     games.append(gm)
 
     player_grid = []
