@@ -321,10 +321,22 @@
         }
 
         //socket.emit('button', {room: "{{game_id}}", button: this.id});
+        if(this.id=="up-button") {
+          socket.emit('move', {game_id: game_id, player_id: player_id, direction:"up"});
+          //player1.setPosition(player1.x - 55, player1.y); 
+        } 
+        if(this.id=="down-button") {
+          socket.emit('move', {game_id: game_id, player_id: player_id, direction:"down"});
+        }
         if(this.id=="left-button") {
-          console.log(this.id);
-          player1.setPosition(player1.x - 55, player1.y); 
-        }    
+          socket.emit('move', {game_id: game_id, player_id: player_id, direction:"left"});
+        }  
+        if(this.id=="right-button") {
+          socket.emit('move', {game_id: game_id, player_id: player_id, direction:"right"});
+        }  
+        if(this.id=="secret-button") {
+          socket.emit('move', {game_id: game_id, player_id: player_id, direction:"secret"});
+        }       
          
     });
 
@@ -334,7 +346,9 @@
     });
 
     socket.on("restart", function(data){
-      console.log(data["player_grid"]);
+      //console.log(data["player_grid"]);
+
+      //take the pieces off the board for now
       player1.setPosition(-100,-100);
       player2.setPosition(-100,-100);
       player3.setPosition(-100,-100);
@@ -342,11 +356,8 @@
       player5.setPosition(-100,-100);
       player6.setPosition(-100,-100);
 
+      //Move the pieces to the right place
       for (var key in data["player_grid"]){
-        //if (data["player_grid"][key]["player_id"] == player_id){
-        //  hand = data["player_grid"][key]["hand"];
-        //  console.log(hand)
-        //}
         if (key=="PROF_PLUM"){
             player1.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
           } else if (key=="MRS_PEACOCK"){
@@ -361,8 +372,6 @@
             player6.setPosition(data["player_grid"][key]["x"]*55 + 55 + 27, data["player_grid"][key]["y"]*43 + 43 + 22);
           }
       }
-
-      //first clear the cross outs
 
       //figure out what hand the player is
       //if turn_count corrresponds to order in players_dict, it's them

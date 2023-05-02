@@ -187,8 +187,11 @@ def move(message):
         if this_game.game_id == game_id:
             gm =this_game.game_id
             break
+    
+    print(game_id,player_id, message['direction'])
 
     move_result = gm.move(player_id, message['direction'])
+    if move_result
     emit("move",{"player_id": player_id, "move_result": move_result}, broadcast=True)
 
 
