@@ -145,7 +145,7 @@ def button_inputs(message):
 def restart(message):
     
     #Should find and replace the correct game
-    games = []
+    #games = []
 
     ######figure out which players are in the game
     ##ONLY register real player_ids
