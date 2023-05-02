@@ -146,6 +146,7 @@ def restart(message):
     
     #Should find and replace the correct game
     #games = []
+    #user_list = []
 
     ######figure out which players are in the game
     ##ONLY register real player_ids
