@@ -209,7 +209,8 @@ def suggestion(message):
             gm =this_game.game_ID
             break
 
-    suggestion_result = gm.check_suggestion(player_id, message['card1'], message['card2'], message['card3'])
+    #suggestion_result = gm.check_suggestion(player_id, message['card1'], message['card2'], message['card3'])
+    suggestion_result = True
     emit("suggestion",{"player_id": player_id, "suggestion_result": suggestion_result}, broadcast=True)
 
 
