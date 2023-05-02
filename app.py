@@ -191,7 +191,7 @@ def move(message):
     print(game_id,player_id, message['direction'])
 
     move_result = gm.move(player_id, message['direction'])
-    if move_result
+    print(move_result)
     emit("move",{"player_id": player_id, "move_result": move_result}, broadcast=True)
 
 
