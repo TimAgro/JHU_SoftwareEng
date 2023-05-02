@@ -305,7 +305,7 @@
         //socket.emit('button', {room: "{{game_id}}", button: this.id});
         if(this.id=="up-button") {
           socket.emit('move', {game_id: game_id, player_id: player_id, direction:"up"});
-          //player1.setPosition(player1.x - 55, player1.y); 
+          //player1.setPosition(player1.x - 55, player1.y);
         } 
         if(this.id=="down-button") {
           socket.emit('move', {game_id: game_id, player_id: player_id, direction:"down"});
@@ -327,8 +327,10 @@
     });
     socket.on("move", function(data){
       //console.log(data["player_grid"]);
-      if (data["move_result"] != Null){
+      if (data["move_result"] != null){
         console.log(data["move_result"]);
+        player1.setPosition(data["move_result"][0]*55 + 55 + 27, data["move_result"][1]*43 + 43 + 22);
+        
       }
     });
     socket.on("restart", function(data){
