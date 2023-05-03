@@ -305,7 +305,7 @@
         console.log(this.id);
 
         //Make accusation
-        if(this.id=="accusation-button") {
+        if(this.id=="accusation-button") {          
           var who = $('ul#who-list').find('li.active').text();
           var what = $('ul#what-list').find('li.active').text();
           var where = $('ul#where-list').find('li.active').text();
@@ -429,9 +429,10 @@
       console.log(data["accusation_result"]);
       console.log(player_id);
       console.log(data["player_id"]);
+      $('#winnerModal').modal('show'); 
 
-      jQuery.noConflict(); 
-      jQuery('#winnerModal').modal('show'); 
+      console.log("modal should have appeared...");
+
       if (data["accusation_result"] != null){
 
         console.log("Winner!");
