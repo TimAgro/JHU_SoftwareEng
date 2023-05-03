@@ -5,7 +5,7 @@ class WeaponType(Enum):
     ROPE = 0
     LEAD_PIPE = 1
     KNIFE = 2
-    WENCH = 3
+    WRENCH = 3
     CANDLE_STICK = 4
     REVOLVER = 5
 

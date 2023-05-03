@@ -95,6 +95,11 @@ class Test(unittest.TestCase):
         result = gm.check_suggestion(1, solution[0], solution[1], solution[2])
         print(result)
 
+    def test_get_player_room(self):
+        print("#########################GET PLAYER ROOM#########################")
+        gm = game.GameManager([1,2,3,4,5,6],1)
+        result = gm.get_player_room(1)
+        print(result)
 
 if __name__ == '__main__':
 	#When tests.py is called in command line, all unit tests will be run sequentially

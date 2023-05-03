@@ -111,6 +111,23 @@ class GameManager:
         else:
             return False
         
+    def get_player_room(self, player_ID):
+        #find the player
+        turn = 0
+        for player in self.players:
+            if player['player_ID'] == player_ID:
+                move_player = player
+                break
+            turn += 1
+
+        #find their position on the board
+        for index, lst in enumerate(self.gb.player_grid):
+            if move_player['type'] in lst:
+                current_position= [index, lst.index(move_player['type'])]
+
+        room = self.gb.room_grid[current_position[0]][current_position[1]]
+        return room
+        
     def move(self, player_ID, direction):
         
         #find the player
@@ -184,7 +201,7 @@ class GameManager:
         else:
             for player in self.players:
                 if player['player_ID'] == player_ID:
-                    player['active'] = false
+                    player['active'] = False
             #print(self.players)
             return False
 
@@ -192,6 +209,12 @@ class GameManager:
     def check_suggestion(self, player_ID, weapon, suspect, room):
         
         #check if the player in the room they suggest
+        if (self.get_player_room(player_ID) != room):
+            return None
+
+        #check if it is their turn and they are active
+        if turn != self.turn_count and player['active']:
+            return None
 
         print(player_ID,weapon,suspect,room)
         print(self.players)
@@ -204,6 +227,13 @@ class GameManager:
             turn += 1
         print(turn)
         print(self.deck.hands)
+
+        #Increment the player_turn counter
+        if self.turn_count == len(self.players)-1:
+            self.turn_count = 0
+        else:
+            self.turn_count += 1
+        
 
         #have to loop after and then before the persons turn. Return the first matching card
         for count, hand in enumerate(self.deck.hands):
@@ -218,6 +248,7 @@ class GameManager:
                     print(card,weapon,suspect,room)
                     if card == weapon or card == suspect or card == room:
                         return card
+        
         
         return None
         
