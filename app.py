@@ -230,14 +230,21 @@ def accusation(message):
     #Get the game_ID
     game_ID = message['game_id']
     player_id = message['player_id']
-     
-    for this_game in games:
-        if this_game.game_ID == game_ID:
-            gm =this_game.game_ID
-            break
 
-    accusation_result = gm.check_accusation(player_id, message['card1'], message['card2'], message['card3'])
-    emit("accusation",{"player_id": player_id, "accusation_result": accusation_result}, broadcast=True)
+    #print(games) 
+    #for this_game in games:
+    #    print(this_game)
+    #    print(this_game.game_ID)
+    #    if this_game.game_ID == game_ID:
+    #        gm =this_game.game_ID
+    #        break
+    gm = games[0]
+
+    accusation_result = gm.check_accusation(player_id, message['what'], message['who'], message['where'])
+    players_dict = {item['player_ID']:item for item in gm.players}
+    #suggestion_result = True
+    emit("accusation",{"player_id": player_id, "accusation_result": accusation_result, "players_dict": players_dict,"turn_count": gm.turn_count}, broadcast=True)
+
 
 
 @socketio.on('turn_check')
