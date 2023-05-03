@@ -202,6 +202,8 @@ class GameManager:
                 move_player = player
                 break
             turn += 1
+        print(turn)
+        print(self.deck.hands)
 
         #have to loop after and then before the persons turn. Return the first matching card
         for count, hand in enumerate(self.deck.hands):
