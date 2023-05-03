@@ -296,7 +296,7 @@
          var what = $('ul#what-list').find('li.active').text();
          var where = $('ul#where-list').find('li.active').text();
          
-         socket.emit('new_message', who);
+         socket.emit('suggestion', {game_id: game_id, player_id: player_id, who:who, what:what, where:where});
 
          console.log(who,what,where);
 
@@ -325,6 +325,7 @@
       //socket.emit('restart', "Restart");
       socket.emit('restart', {game_id: "{{game_id}}"});
     });
+
     socket.on("move", function(data){
       //console.log(data["player_grid"]);
       if (data["move_result"] != null){
@@ -363,6 +364,41 @@
         }
       }
     });
+
+    socket.on("suggestion", function(data){
+      //console.log(data["player_grid"]);
+      console.log(data["suggestion_result"]);
+      console.log(player_id);
+      console.log(data["player_id"]);
+      if (data["suggestion_result"] != null){
+
+        //figure out what hand the player is
+        //if turn_count corrresponds to order in players_dict, it's them
+
+        if (data["player_id"] == player_id){
+
+          if (data["suggestion_result"] != hand){
+            $('.what').each(function(){
+              if($(this).text() == data["suggestion_result"]){
+                $(this).toggleClass('stroked');
+              }
+            });
+            $('.who').each(function(){
+              if($(this).text() == data["suggestion_result"]){
+                $(this).toggleClass('stroked');
+              }
+            }); 
+            $('.where').each(function(){
+              if($(this).text() == data["suggestion_result"]){
+                $(this).toggleClass('stroked');
+              }
+            });
+          }  
+        }
+
+      }
+    });
+
     socket.on("restart", function(data){
       //console.log(data["player_grid"]);
 

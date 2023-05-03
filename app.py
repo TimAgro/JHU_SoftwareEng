@@ -210,17 +210,19 @@ def suggestion(message):
     game_ID = message['game_id']
     player_id = message['player_id']
 
-    print(games) 
-    for this_game in games:
-        print(this_game)
-        print(this_game.game_ID)
-        if this_game.game_ID == game_ID:
-            gm =this_game.game_ID
-            break
+    #print(games) 
+    #for this_game in games:
+    #    print(this_game)
+    #    print(this_game.game_ID)
+    #    if this_game.game_ID == game_ID:
+    #        gm =this_game.game_ID
+    #        break
+    gm = games[0]
 
-    #suggestion_result = gm.check_suggestion(player_id, message['card1'], message['card2'], message['card3'])
-    suggestion_result = True
-    emit("suggestion",{"player_id": player_id, "suggestion_result": suggestion_result}, broadcast=True)
+    suggestion_result = gm.check_suggestion(player_id, message['card1'], message['card2'], message['card3'])
+    players_dict = {item['player_ID']:item for item in gm.players}
+    #suggestion_result = True
+    emit("suggestion",{"player_id": player_id, "suggestion_result": suggestion_result, "players_dict": players_dict,"turn_count": gm.turn_count}, broadcast=True)
 
 
 @socketio.on('accusation')
