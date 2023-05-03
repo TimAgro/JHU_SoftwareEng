@@ -422,13 +422,11 @@
       console.log(data["accusation_result"]);
       console.log(player_id);
       console.log(data["player_id"]);
-      $('#winnerModal').modal('show');
-      $('#winner-dialog').text(data["player_id"] + " has won the game!"); 
 
       console.log("modal should have appeared...");
 
       if (data["accusation_result"] != null){
-
+        $('#winnerModal').modal('show');
         $('#winner-dialog').text(data["player_id"] + " has won the game!");
       
       }
