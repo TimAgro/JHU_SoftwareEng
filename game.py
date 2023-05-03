@@ -192,7 +192,7 @@ class GameManager:
     def check_suggestion(self, player_ID, weapon, suspect, room):
         
         #check if the player in the room they suggest
-        
+
         #find the player turn
         turn = 0
         for player in self.players:
@@ -205,11 +205,13 @@ class GameManager:
         for count, hand in enumerate(self.deck.hands):
             if count > turn:
                 for card in hand:
+                    print(card,weapon,suspect,room)
                     if card == weapon or card == suspect or card == room:
                         return card
         for count, hand in enumerate(self.deck.hands):
             if count < turn:
                 for card in hand:
+                    print(card,weapon,suspect,room)
                     if card == weapon or card == suspect or card == room:
                         return card
         
