@@ -283,17 +283,24 @@
 
         //Make accusation
         if(this.id=="accusation-button") {
+          var who = $('ul#who-list').find('li.active').text();
+          var what = $('ul#what-list').find('li.active').text();
+          var where = $('ul#where-list').find('li.active').text();
+         
+          socket.emit('suggestion', {game_id: game_id, player_id: player_id, who:who, what:what, where:where});
+
+          console.log(who,what,where);
         }
 
         //Make suggestion
         if(this.id=="suggestion-button") {
-         var who = $('ul#who-list').find('li.active').text();
-         var what = $('ul#what-list').find('li.active').text();
-         var where = $('ul#where-list').find('li.active').text();
+          var who = $('ul#who-list').find('li.active').text();
+          var what = $('ul#what-list').find('li.active').text();
+          var where = $('ul#where-list').find('li.active').text();
          
-         socket.emit('suggestion', {game_id: game_id, player_id: player_id, who:who, what:what, where:where});
+          socket.emit('suggestion', {game_id: game_id, player_id: player_id, who:who, what:what, where:where});
 
-         console.log(who,what,where);
+          console.log(who,what,where);
 
         }
 
