@@ -210,11 +210,12 @@ class GameManager:
         
         #check if the player in the room they suggest
         if (self.get_player_room(player_ID) != room):
+            print(room)
             return None
 
         #check if it is their turn and they are active
-        if turn != self.turn_count and player['active']:
-            return None
+        #if turn != self.turn_count and player['active']:
+        #    return None
 
         print(player_ID,weapon,suspect,room)
         print(self.players)
