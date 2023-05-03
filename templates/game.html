@@ -430,7 +430,8 @@
       console.log(player_id);
       console.log(data["player_id"]);
 
-      $('#winnerModal').modal();
+      jQuery.noConflict(); 
+      jQuery('#winnerModal').modal('show'); 
       if (data["accusation_result"] != null){
 
         console.log("Winner!");
