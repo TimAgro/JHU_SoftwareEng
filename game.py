@@ -193,6 +193,7 @@ class GameManager:
         
         #check if the player in the room they suggest
 
+        print(weapon,suspect,room)
         #find the player turn
         turn = 0
         for player in self.players:
