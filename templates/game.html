@@ -142,7 +142,7 @@
     socket.on("join", function(data){
       console.log("comment emitted ");
       if (document.getElementById(data["username"]) == null) {
-        $('#player_list').append('<div class="list-group-item justify-content-between" id="' + data["username"] + '">' + data["username"] '</div>');  
+        $('#player_list').append('<div class="list-group-item justify-content-between" id="' + data["username"] + '">' + data["username"] + '</div>');  
       } else {
       }
     })
