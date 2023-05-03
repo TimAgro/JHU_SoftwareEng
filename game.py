@@ -191,7 +191,12 @@ class GameManager:
         return next_position
         
 
-    def check_accusation(self, player_id, weapon, suspect, room):
+    def check_accusation(self, player_ID, weapon, suspect, room):
+        #check if the player in the room they suggest
+        if (self.get_player_room(player_ID) != room):
+            print(room)
+            return None
+        
         #Check the deck solution
         if (weapon == self.deck.solution[0] and
             suspect == self.deck.solution[1] and

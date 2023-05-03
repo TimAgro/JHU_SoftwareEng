@@ -163,11 +163,6 @@
       window.location = "{{ url_for('index') }}";
     });
 
-    //$(".btn-secondary").click(function(){    
-    //    console.log(this.id);
-    //    socket.emit('button', {room: "{{game_id}}", button: this.id});
-    //});
-        
 });
 
 </script>
@@ -396,6 +391,18 @@
           }  
         }
 
+      }
+    });
+
+    socket.on("accusation", function(data){
+      //console.log(data["player_grid"]);
+      console.log(data["accusation_result"]);
+      console.log(player_id);
+      console.log(data["player_id"]);
+      if (data["accusation_result"] == True){
+
+        //display winner modal
+      
       }
     });
 
